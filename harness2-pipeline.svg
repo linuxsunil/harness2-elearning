@@ -1,0 +1,226 @@
+<svg viewBox="0 0 860 220" xmlns="http://www.w3.org/2000/svg" role="img"
+  aria-label="Harness² pipeline: PROPOSE → PROBE → COMPOSE → REFLECT, four nodes lighting up in sequence"
+  style="max-width:100%;height:auto;display:block;">
+
+  <defs>
+    <!-- Arrowhead marker -->
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+      <polygon points="0,0 8,3 0,6" fill="#A47864" opacity="0.85"/>
+    </marker>
+
+    <!-- Glow filter for active node -->
+    <filter id="glow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="4" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+
+    <!-- Node base style via animate: idle = parchment, active = mocha -->
+    <!-- Step timings (cycle = 4.8s):
+         PROPOSE  active 0.0–1.2s
+         PROBE    active 1.2–2.4s
+         COMPOSE  active 2.4–3.6s
+         REFLECT  active 3.6–4.8s  -->
+
+    <style>
+      .node-rect {
+        rx: 14; ry: 14;
+        stroke-width: 1.8;
+      }
+      .node-label {
+        font-family: 'SF Mono', 'Fira Code', 'IBM Plex Mono', monospace;
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        text-anchor: middle;
+      }
+      .node-sub {
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        font-size: 9.5px;
+        text-anchor: middle;
+        fill: #7A6258;
+      }
+      .node-emoji {
+        font-size: 18px;
+        text-anchor: middle;
+      }
+      .connector {
+        stroke: #A47864;
+        stroke-width: 1.6;
+        fill: none;
+        opacity: 0.5;
+        stroke-dasharray: 6 3;
+      }
+      .conn-label {
+        font-family: 'SF Mono', 'Fira Code', monospace;
+        font-size: 8.5px;
+        fill: #B8A89E;
+        text-anchor: middle;
+      }
+      .title-text {
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        font-size: 13px;
+        font-weight: 700;
+        fill: #2C1A14;
+        text-anchor: middle;
+      }
+      .subtitle-text {
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        font-size: 10px;
+        fill: #7A6258;
+        text-anchor: middle;
+      }
+      /* Pulse ring on active node */
+      .pulse {
+        fill: none;
+        stroke: #A47864;
+        stroke-width: 1.2;
+        opacity: 0;
+      }
+    </style>
+  </defs>
+
+  <!-- Background -->
+  <rect width="860" height="220" rx="18" fill="#FAF7F4" stroke="#E4D9D0" stroke-width="1.2"/>
+
+  <!-- Title row -->
+  <text x="430" y="30" class="title-text">Harness²  eLearning Pipeline</text>
+  <text x="430" y="46" class="subtitle-text">Generic AI vs Domain-Adapted AI — live, scored, exported</text>
+
+  <!-- ─── Node positions (cx of each box, all y=110 centre) ───
+       PROPOSE  cx=100   PROBE cx=290   COMPOSE cx=480   REFLECT cx=670
+       box w=140 h=90, so left edge = cx-70, top = 65 -->
+
+  <!-- ══ Connectors (drawn before nodes so nodes sit on top) ══ -->
+
+  <!-- PROPOSE → PROBE -->
+  <line x1="170" y1="110" x2="218" y2="110" class="connector" marker-end="url(#arr)"/>
+  <text x="194" y="105" class="conn-label">baseline</text>
+
+  <!-- PROBE → COMPOSE -->
+  <line x1="360" y1="110" x2="408" y2="110" class="connector" marker-end="url(#arr)"/>
+  <text x="384" y="105" class="conn-label">adapted</text>
+
+  <!-- COMPOSE → REFLECT -->
+  <line x1="550" y1="110" x2="598" y2="110" class="connector" marker-end="url(#arr)"/>
+  <text x="574" y="105" class="conn-label">scores + lesson</text>
+
+  <!-- Memory loop: REFLECT back to PROBE (arc below) -->
+  <path d="M 670,155 Q 480,195 290,155" class="connector" marker-end="url(#arr)" stroke-dasharray="4 3"/>
+  <text x="480" y="192" class="conn-label">refined prompt → memory.json</text>
+
+  <!-- ══ NODE 1 — PROPOSE ══ -->
+  <g id="n1">
+    <!-- idle bg -->
+    <rect x="30" y="65" width="140" height="90" rx="14" fill="#F0EAE4" stroke="#E4D9D0" stroke-width="1.8">
+      <animate attributeName="fill" values="#F0EAE4;#A47864;#A47864;#F0EAE4;#F0EAE4;#F0EAE4;#F0EAE4;#F0EAE4"
+        keyTimes="0;0.01;0.24;0.26;0.5;0.75;0.99;1"
+        dur="4.8s" repeatCount="indefinite"/>
+      <animate attributeName="stroke" values="#E4D9D0;#7A5548;#7A5548;#E4D9D0;#E4D9D0;#E4D9D0;#E4D9D0;#E4D9D0"
+        keyTimes="0;0.01;0.24;0.26;0.5;0.75;0.99;1"
+        dur="4.8s" repeatCount="indefinite"/>
+    </rect>
+    <!-- pulse ring -->
+    <rect x="22" y="57" width="156" height="106" rx="20" class="pulse">
+      <animate attributeName="opacity" values="0;0.6;0;0;0;0;0;0"
+        keyTimes="0;0.12;0.25;0.5;0.75;0.88;0.99;1"
+        dur="4.8s" repeatCount="indefinite"/>
+      <animate attributeName="stroke-width" values="1.2;2.4;1.2;1.2;1.2;1.2;1.2;1.2"
+        keyTimes="0;0.12;0.25;0.5;0.75;0.88;0.99;1"
+        dur="4.8s" repeatCount="indefinite"/>
+    </rect>
+    <text x="100" y="97" class="node-emoji">🔵</text>
+    <text x="100" y="118" class="node-label">
+      <animate attributeName="fill" values="#A47864;#fff;#fff;#A47864;#A47864;#A47864;#A47864;#A47864"
+        keyTimes="0;0.01;0.24;0.26;0.5;0.75;0.99;1"
+        dur="4.8s" repeatCount="indefinite"/>
+      PROPOSE
+    </text>
+    <text x="100" y="131" class="node-sub">Generic agent</text>
+    <text x="100" y="143" class="node-sub">no domain knowledge</text>
+  </g>
+
+  <!-- ══ NODE 2 — PROBE ══ -->
+  <g id="n2">
+    <rect x="220" y="65" width="140" height="90" rx="14" fill="#F0EAE4" stroke="#E4D9D0" stroke-width="1.8">
+      <animate attributeName="fill" values="#F0EAE4;#F0EAE4;#A47864;#A47864;#F0EAE4;#F0EAE4;#F0EAE4;#F0EAE4"
+        keyTimes="0;0.25;0.26;0.49;0.5;0.75;0.99;1"
+        dur="4.8s" repeatCount="indefinite"/>
+      <animate attributeName="stroke" values="#E4D9D0;#E4D9D0;#7A5548;#7A5548;#E4D9D0;#E4D9D0;#E4D9D0;#E4D9D0"
+        keyTimes="0;0.25;0.26;0.49;0.5;0.75;0.99;1"
+        dur="4.8s" repeatCount="indefinite"/>
+    </rect>
+    <rect x="212" y="57" width="156" height="106" rx="20" class="pulse">
+      <animate attributeName="opacity" values="0;0;0.6;0;0;0;0;0"
+        keyTimes="0;0.25;0.37;0.5;0.75;0.88;0.99;1"
+        dur="4.8s" repeatCount="indefinite"/>
+    </rect>
+    <text x="290" y="97" class="node-emoji">🟣</text>
+    <text x="290" y="118" class="node-label">
+      <animate attributeName="fill" values="#A47864;#A47864;#fff;#fff;#A47864;#A47864;#A47864;#A47864"
+        keyTimes="0;0.25;0.26;0.49;0.5;0.75;0.99;1"
+        dur="4.8s" repeatCount="indefinite"/>
+      PROBE
+    </text>
+    <text x="290" y="131" class="node-sub">Domain agent</text>
+    <text x="290" y="143" class="node-sub">regulatory vocab + memory</text>
+  </g>
+
+  <!-- ══ NODE 3 — COMPOSE ══ -->
+  <g id="n3">
+    <rect x="410" y="65" width="140" height="90" rx="14" fill="#F0EAE4" stroke="#E4D9D0" stroke-width="1.8">
+      <animate attributeName="fill" values="#F0EAE4;#F0EAE4;#F0EAE4;#A47864;#A47864;#F0EAE4;#F0EAE4;#F0EAE4"
+        keyTimes="0;0.25;0.5;0.51;0.74;0.75;0.99;1"
+        dur="4.8s" repeatCount="indefinite"/>
+      <animate attributeName="stroke" values="#E4D9D0;#E4D9D0;#E4D9D0;#7A5548;#7A5548;#E4D9D0;#E4D9D0;#E4D9D0"
+        keyTimes="0;0.25;0.5;0.51;0.74;0.75;0.99;1"
+        dur="4.8s" repeatCount="indefinite"/>
+    </rect>
+    <rect x="402" y="57" width="156" height="106" rx="20" class="pulse">
+      <animate attributeName="opacity" values="0;0;0;0.6;0;0;0;0"
+        keyTimes="0;0.25;0.5;0.62;0.75;0.88;0.99;1"
+        dur="4.8s" repeatCount="indefinite"/>
+    </rect>
+    <text x="480" y="97" class="node-emoji">⚖️</text>
+    <text x="480" y="118" class="node-label">
+      <animate attributeName="fill" values="#A47864;#A47864;#A47864;#fff;#fff;#A47864;#A47864;#A47864"
+        keyTimes="0;0.25;0.5;0.51;0.74;0.75;0.99;1"
+        dur="4.8s" repeatCount="indefinite"/>
+      COMPOSE
+    </text>
+    <text x="480" y="131" class="node-sub">Evaluator agent</text>
+    <text x="480" y="143" class="node-sub">scores 3 ID dimensions</text>
+  </g>
+
+  <!-- ══ NODE 4 — REFLECT ══ -->
+  <g id="n4">
+    <rect x="600" y="65" width="140" height="90" rx="14" fill="#F0EAE4" stroke="#E4D9D0" stroke-width="1.8">
+      <animate attributeName="fill" values="#F0EAE4;#F0EAE4;#F0EAE4;#F0EAE4;#A47864;#A47864;#F0EAE4;#F0EAE4"
+        keyTimes="0;0.25;0.5;0.75;0.76;0.98;0.99;1"
+        dur="4.8s" repeatCount="indefinite"/>
+      <animate attributeName="stroke" values="#E4D9D0;#E4D9D0;#E4D9D0;#E4D9D0;#7A5548;#7A5548;#E4D9D0;#E4D9D0"
+        keyTimes="0;0.25;0.5;0.75;0.76;0.98;0.99;1"
+        dur="4.8s" repeatCount="indefinite"/>
+    </rect>
+    <rect x="592" y="57" width="156" height="106" rx="20" class="pulse">
+      <animate attributeName="opacity" values="0;0;0;0;0.6;0;0;0"
+        keyTimes="0;0.25;0.5;0.75;0.87;0.99;0.995;1"
+        dur="4.8s" repeatCount="indefinite"/>
+    </rect>
+    <text x="670" y="97" class="node-emoji">🧠</text>
+    <text x="670" y="118" class="node-label">
+      <animate attributeName="fill" values="#A47864;#A47864;#A47864;#A47864;#fff;#fff;#A47864;#A47864"
+        keyTimes="0;0.25;0.5;0.75;0.76;0.98;0.99;1"
+        dur="4.8s" repeatCount="indefinite"/>
+      REFLECT
+    </text>
+    <text x="670" y="131" class="node-sub">Lesson extracted</text>
+    <text x="670" y="143" class="node-sub">prompt refined → memory</text>
+  </g>
+
+  <!-- ══ Bottom legend ══ -->
+  <rect x="800" y="68" width="46" height="16" rx="4" fill="#EBF3EC" stroke="#6B8F71" stroke-width="1"/>
+  <text x="823" y="80" font-family="sans-serif" font-size="8" fill="#2D5A35" text-anchor="middle">domain wins</text>
+  <rect x="800" y="90" width="46" height="16" rx="4" fill="#F0EAE4" stroke="#E4D9D0" stroke-width="1"/>
+  <text x="823" y="102" font-family="sans-serif" font-size="8" fill="#7A6258" text-anchor="middle">generic loses</text>
+
+</svg>

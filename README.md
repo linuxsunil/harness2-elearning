@@ -2,6 +2,8 @@
 
 > Domain-adaptive branching scenario generator — inspired by [Google Research Harness²](https://github.com/google-research/harness2) · powered by Claude API · deployable to Streamlit Cloud
 
+![Harness² Pipeline](harness2-pipeline.svg)
+
 [![Python](https://img.shields.io/badge/Python-3.10+-blue?style=flat-square&logo=python)](https://python.org)
 [![Streamlit](https://img.shields.io/badge/Streamlit-1.38+-red?style=flat-square&logo=streamlit)](https://streamlit.io)
 [![Claude](https://img.shields.io/badge/Claude-claude--sonnet--4--5-purple?style=flat-square)](https://anthropic.com)
