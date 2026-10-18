@@ -30,61 +30,76 @@ st.set_page_config(
     initial_sidebar_state="collapsed",
 )
 
-# ── Custom CSS ────────────────────────────────────────────────────────────────
+# ── Custom CSS — Mocha Mousse (Pantone 17-1230, Colour of Year 2025) ──────────
 st.markdown("""
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;600&display=swap');
 
+/*
+  Palette — Mocha Mousse 2025
+  --mocha:   #A47864  Pantone 17-1230 (primary accent)
+  --mocha-d: #7A5548  darker mocha (hover, borders)
+  --mocha-l: #C4A494  lighter mocha (secondary accents)
+  --cream:   #FAF7F4  warm white background
+  --parchment: #F0EAE4 card surfaces
+  --linen:   #E4D9D0  borders / dividers
+  --espresso:#2C1A14  primary text
+  --warm-mid:#7A6258  secondary text
+  --warm-dim:#B8A89E  muted text
+  --sage:    #6B8F71  correct/success
+  --terracotta: #C0533A wrong/error
+*/
+
 html, body, [class*="css"] { font-family: 'Inter', sans-serif; }
 
-.stApp { background: #0f1117; }
+.stApp { background: #FAF7F4; }
 .main .block-container { padding: 2rem 2rem 4rem; max-width: 1400px; }
 
 /* Hero header */
 .hero {
   padding: 2.5rem 0 1.5rem;
-  border-bottom: 1px solid #1e2030;
+  border-bottom: 1px solid #E4D9D0;
   margin-bottom: 2rem;
 }
 .hero h1 {
-  font-size: 2.2rem; font-weight: 800; color: #fff;
+  font-size: 2.2rem; font-weight: 800; color: #2C1A14;
   margin: 0 0 8px;
 }
-.hero p { color: #7c85b3; font-size: 1.05rem; margin: 0; }
+.hero p { color: #7A6258; font-size: 1.05rem; margin: 0; }
 
 /* Section labels */
 .section-label {
   font-size: 11px; font-weight: 700; letter-spacing: 0.1em;
-  text-transform: uppercase; color: #6c6ff5;
+  text-transform: uppercase; color: #A47864;
   font-family: 'IBM Plex Mono', monospace;
   margin-bottom: 8px;
 }
 
 /* Trace log */
 .trace-log {
-  background: #0a0c14; border: 1px solid #1e2030;
+  background: #2C1A14; border: 1px solid #4A2E22;
   border-radius: 12px; padding: 16px;
   font-family: 'IBM Plex Mono', monospace;
-  font-size: 12px; color: #7c85b3;
+  font-size: 12px; color: #C4A494;
   max-height: 380px; overflow-y: auto;
   line-height: 1.7;
 }
 .trace-entry { margin-bottom: 4px; }
-.trace-generic { color: #f59e0b; }
-.trace-domain  { color: #818cf8; }
-.trace-eval    { color: #10b981; }
-.trace-dim     { color: #374060; }
+.trace-generic { color: #E8B48A; }
+.trace-domain  { color: #C4A494; font-weight: 600; }
+.trace-eval    { color: #8FBF96; }
+.trace-dim     { color: #6B4A3A; }
 
 /* Score cards */
 .score-card {
-  background: #1a1d2e; border: 1px solid #2d3055;
+  background: #F0EAE4; border: 1px solid #E4D9D0;
   border-radius: 12px; padding: 20px; text-align: center;
   margin-bottom: 12px;
 }
-.score-big { font-size: 3rem; font-weight: 800; color: #fff; line-height: 1; }
-.score-label { font-size: 11px; color: #7c85b3; margin-top: 4px;
+.score-big { font-size: 3rem; font-weight: 800; color: #2C1A14; line-height: 1; }
+.score-label { font-size: 11px; color: #7A6258; margin-top: 4px;
                text-transform: uppercase; letter-spacing: 0.05em; }
-.score-dim  { font-size: 0.9rem; color: #4a5080; }
+.score-dim  { font-size: 0.9rem; color: #B8A89E; }
 
 /* Verdict badge */
 .verdict-badge {
@@ -92,33 +107,52 @@ html, body, [class*="css"] { font-family: 'Inter', sans-serif; }
   border-radius: 99px; font-size: 12px; font-weight: 700;
   letter-spacing: 0.04em; margin-bottom: 8px;
 }
-.verdict-winner { background: #10b981; color: #fff; }
-.verdict-loser  { background: #1e2030; color: #7c85b3; border: 1px solid #2d3055; }
+.verdict-winner { background: #A47864; color: #fff; }
+.verdict-loser  { background: #F0EAE4; color: #7A6258; border: 1px solid #E4D9D0; }
 
 /* Scenario player */
 .scenario-frame {
-  background: #12141f; border: 1px solid #2d3055;
+  background: #F0EAE4; border: 1px solid #E4D9D0;
   border-radius: 14px; padding: 24px;
   margin-top: 12px;
 }
-.scene-situation { color: #dde0f0; line-height: 1.75; font-size: 0.97rem; }
-.choice-btn-correct { border-left: 3px solid #10b981 !important; }
-.choice-btn-wrong   { border-left: 3px solid #ef4444 !important; }
+.scene-situation { color: #2C1A14; line-height: 1.75; font-size: 0.97rem; }
+.choice-btn-correct { border-left: 3px solid #6B8F71 !important; }
+.choice-btn-wrong   { border-left: 3px solid #C0533A !important; }
 
 /* Info boxes */
 .info-box {
-  background: #1a1d2e; border: 1px solid #2d3055;
+  background: #F0EAE4; border: 1px solid #E4D9D0;
   border-radius: 10px; padding: 14px 16px;
-  font-size: 0.9rem; color: #9ba3c4; margin-bottom: 12px;
+  font-size: 0.9rem; color: #7A6258; margin-bottom: 12px;
 }
-.info-box strong { color: #fff; }
+.info-box strong { color: #2C1A14; }
 
 /* Highlight block */
 .highlight-block {
-  background: #1e2030; border-left: 3px solid #6c6ff5;
+  background: #F0EAE4; border-left: 3px solid #A47864;
   border-radius: 0 10px 10px 0; padding: 12px 16px;
-  font-size: 0.9rem; color: #9ba3c4; margin-bottom: 12px;
+  font-size: 0.9rem; color: #7A6258; margin-bottom: 12px;
 }
+
+/* Streamlit native widget overrides */
+.stButton > button {
+  background: #A47864 !important; color: #fff !important;
+  border: none !important; border-radius: 10px !important;
+  font-weight: 600 !important;
+}
+.stButton > button:hover { background: #7A5548 !important; }
+.stSelectbox > div > div { border-color: #E4D9D0 !important; background: #F0EAE4 !important; color: #2C1A14 !important; }
+.stTextInput > div > div > input { border-color: #E4D9D0 !important; background: #F0EAE4 !important; color: #2C1A14 !important; }
+.stTextArea > div > div > textarea { border-color: #E4D9D0 !important; background: #F0EAE4 !important; color: #2C1A14 !important; }
+div[data-testid="stInfo"] { background: #F0EAE4 !important; border-color: #A47864 !important; color: #2C1A14 !important; }
+div[data-testid="stSuccess"] { background: #EBF3EC !important; border-color: #6B8F71 !important; color: #2C1A14 !important; }
+div[data-testid="stError"] { background: #FAEAE6 !important; border-color: #C0533A !important; color: #2C1A14 !important; }
+.stTabs [data-baseweb="tab"] { color: #7A6258 !important; }
+.stTabs [data-baseweb="tab"][aria-selected="true"] { color: #A47864 !important; border-bottom-color: #A47864 !important; }
+.stProgress > div > div { background: #A47864 !important; }
+h1, h2, h3 { color: #2C1A14 !important; }
+p, li, label { color: #2C1A14 !important; }
 </style>
 """, unsafe_allow_html=True)
 
