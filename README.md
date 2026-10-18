@@ -124,8 +124,11 @@ The original [google-research/harness²](https://github.com/google-research/harn
 
 ## Built by
 
-**Sunil Iyer** — Senior Instructional Designer,  · Tenkasi 
-10+ years in eLearning · Articulate Rise 360 / Storyline 360 · SCORM/xAPI · AI-assisted course design
+**Sunil Iyer** — Senior Instructional Designer,  · Tenkasi
+
+10+ years in eLearning 
+
+· Articulate Rise 360 / Storyline 360 · SCORM/xAPI · AI-assisted course design
 
 ---
 
