@@ -77,18 +77,18 @@ html, body, [class*="css"] { font-family: 'Inter', sans-serif; }
 
 /* Trace log */
 .trace-log {
-  background: #2C1A14; border: 1px solid #4A2E22;
+  background: #FDF9F6; border: 2px solid #E4D9D0;
   border-radius: 12px; padding: 16px;
   font-family: 'IBM Plex Mono', monospace;
-  font-size: 12px; color: #C4A494;
+  font-size: 12px; color: #5A3E32;
   max-height: 380px; overflow-y: auto;
   line-height: 1.7;
 }
 .trace-entry { margin-bottom: 4px; }
-.trace-generic { color: #E8B48A; }
-.trace-domain  { color: #C4A494; font-weight: 600; }
-.trace-eval    { color: #8FBF96; }
-.trace-dim     { color: #6B4A3A; }
+.trace-generic { color: #B85C00; font-weight: 600; }
+.trace-domain  { color: #7A4A2A; font-weight: 700; }
+.trace-eval    { color: #2E7A4A; font-weight: 600; }
+.trace-dim     { color: #B8A89E; }
 
 /* Score cards */
 .score-card {
