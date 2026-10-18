@@ -216,8 +216,8 @@ function renderScene() {{
   answered = false;
   const scene = SCENES[current];
   const n = SCENES.length;
-  let choicesHtml = scene.choices.map(c => `
-    <button class="choice" onclick="pick(this, ${{c.correct}}, '${{c.feedback}}')" data-correct="${{c.correct}}">
+  let choicesHtml = scene.choices.map((c, ci) => `
+    <button class="choice" onclick="pick(this, ${{ci}})" data-correct="${{c.correct}}">
       <span class="choice-key">${{c.key}}</span>
       <span>${{c.text}}</span>
     </button>
@@ -234,9 +234,11 @@ function renderScene() {{
   updateProgress();
 }}
 
-function pick(btn, correct, feedback) {{
+function pick(btn, choiceIdx) {{
   if (answered) return;
   answered = true;
+  const choice = SCENES[current].choices[choiceIdx];
+  const correct = choice.correct;
   if (correct) score++;
 
   document.querySelectorAll('.choice').forEach(b => {{
@@ -246,7 +248,7 @@ function pick(btn, correct, feedback) {{
   btn.classList.add(correct ? 'correct' : 'wrong');
 
   const fb = document.getElementById('fb');
-  fb.textContent = feedback;
+  fb.textContent = choice.feedback;
   fb.className = 'feedback-box show ' + (correct ? 'correct' : 'wrong');
   document.getElementById('nxt').classList.add('show');
 }}
