@@ -54,12 +54,26 @@ def export(scenario: dict, domain: str = "", agent_label: str = "Domain-Adapted"
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>{title}</title>
 <style>
+  /*
+    Palette — Mocha Mousse (Pantone 17-1230, CoY 2025)
+    --mocha:   #A47864  accent / buttons / labels
+    --mocha-d: #7A5548  hover / borders
+    --mocha-l: #C4A494  secondary accents
+    --cream:   #FAF7F4  page background
+    --parchment: #F0EAE4 card surfaces
+    --linen:   #E4D9D0  borders
+    --espresso:#2C1A14  primary text
+    --warm-mid:#7A6258  secondary text
+    --warm-dim:#B8A89E  muted / meta
+    --sage:    #6B8F71  correct
+    --terracotta: #C0533A wrong
+  */
   *, *::before, *::after {{ box-sizing: border-box; }}
   body {{
     margin: 0; padding: 0;
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-    background: #0f1117;
-    color: #e8eaf0;
+    background: #FAF7F4;
+    color: #2C1A14;
     min-height: 100vh;
   }}
   .shell {{
@@ -69,108 +83,108 @@ def export(scenario: dict, domain: str = "", agent_label: str = "Domain-Adapted"
   }}
   .badge {{
     display: inline-flex; align-items: center; gap: 6px;
-    background: #1e2030; border: 1px solid #2d3055;
+    background: #F0EAE4; border: 1px solid #E4D9D0;
     border-radius: 6px; padding: 4px 10px;
-    font-size: 11px; color: #7c85b3; margin-bottom: 20px;
+    font-size: 11px; color: #7A6258; margin-bottom: 20px;
     font-family: 'SF Mono', 'Fira Code', monospace;
   }}
-  .badge-dot {{ width: 7px; height: 7px; border-radius: 50%; background: #6c6ff5; }}
+  .badge-dot {{ width: 7px; height: 7px; border-radius: 50%; background: #A47864; }}
   h1 {{
     font-size: 1.5rem; font-weight: 700; margin: 0 0 10px;
-    color: #ffffff; line-height: 1.3;
+    color: #2C1A14; line-height: 1.3;
   }}
   .context {{
-    font-size: 0.95rem; color: #9ba3c4; line-height: 1.7;
+    font-size: 0.95rem; color: #7A6258; line-height: 1.7;
     margin-bottom: 16px;
-    padding: 16px; background: #1a1d2e; border-radius: 10px;
-    border-left: 3px solid #6c6ff5;
+    padding: 16px; background: #F0EAE4; border-radius: 10px;
+    border-left: 3px solid #A47864;
   }}
   .tags {{ display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 28px; }}
   .tag {{
-    background: #1e2030; border: 1px solid #2d3055;
+    background: #F0EAE4; border: 1px solid #E4D9D0;
     border-radius: 99px; padding: 3px 12px;
-    font-size: 11px; color: #5c6bc0; font-weight: 600;
+    font-size: 11px; color: #A47864; font-weight: 600;
     text-transform: uppercase; letter-spacing: 0.05em;
   }}
   .progress-bar {{
-    height: 4px; background: #1e2030; border-radius: 2px;
+    height: 4px; background: #E4D9D0; border-radius: 2px;
     margin-bottom: 28px; overflow: hidden;
   }}
   .progress-fill {{
-    height: 100%; background: linear-gradient(90deg, #6c6ff5, #a78bfa);
+    height: 100%; background: linear-gradient(90deg, #A47864, #C4A494);
     border-radius: 2px; transition: width 0.5s ease;
   }}
   .scene-label {{
     font-size: 11px; font-weight: 700; letter-spacing: 0.1em;
-    color: #6c6ff5; text-transform: uppercase; margin-bottom: 10px;
+    color: #A47864; text-transform: uppercase; margin-bottom: 10px;
     font-family: 'SF Mono', 'Fira Code', monospace;
   }}
   .situation {{
-    font-size: 1.05rem; line-height: 1.75; color: #dde0f0;
+    font-size: 1.05rem; line-height: 1.75; color: #2C1A14;
     margin-bottom: 24px;
   }}
   .choices {{ display: flex; flex-direction: column; gap: 10px; }}
   .choice {{
     display: flex; align-items: flex-start; gap: 14px;
-    background: #1a1d2e; border: 1.5px solid #2d3055;
+    background: #F0EAE4; border: 1.5px solid #E4D9D0;
     border-radius: 12px; padding: 16px;
     cursor: pointer; transition: all 0.18s ease;
-    text-align: left; width: 100%; color: inherit;
+    text-align: left; width: 100%; color: #2C1A14;
     font-size: 0.95rem; line-height: 1.55;
   }}
   .choice:hover:not(:disabled) {{
-    border-color: #6c6ff5; background: #1e2030;
+    border-color: #A47864; background: #EDE0D4;
   }}
   .choice:disabled {{ cursor: default; }}
-  .choice.correct {{ border-color: #10b981; background: #0d1f1a; }}
-  .choice.wrong {{ border-color: #ef4444; background: #1f0d0d; }}
+  .choice.correct {{ border-color: #6B8F71; background: #EBF3EC; }}
+  .choice.wrong {{ border-color: #C0533A; background: #FAEAE6; }}
   .choice-key {{
     width: 28px; height: 28px; min-width: 28px; border-radius: 8px;
-    background: #2d3055; display: flex; align-items: center; justify-content: center;
-    font-size: 12px; font-weight: 700; color: #7c85b3;
+    background: #E4D9D0; display: flex; align-items: center; justify-content: center;
+    font-size: 12px; font-weight: 700; color: #7A6258;
     font-family: 'SF Mono', 'Fira Code', monospace;
     transition: background 0.18s;
   }}
-  .choice.correct .choice-key {{ background: #10b981; color: #fff; }}
-  .choice.wrong .choice-key {{ background: #ef4444; color: #fff; }}
+  .choice.correct .choice-key {{ background: #6B8F71; color: #fff; }}
+  .choice.wrong .choice-key {{ background: #C0533A; color: #fff; }}
   .feedback-box {{
     margin-top: 16px; padding: 14px 16px;
     border-radius: 10px; font-size: 0.9rem; line-height: 1.65;
     display: none;
   }}
   .feedback-box.show {{ display: block; }}
-  .feedback-box.correct {{ background: #0d1f1a; border: 1px solid #10b981; color: #6ee7b7; }}
-  .feedback-box.wrong {{ background: #1f0d0d; border: 1px solid #ef4444; color: #fca5a5; }}
+  .feedback-box.correct {{ background: #EBF3EC; border: 1px solid #6B8F71; color: #2D5A35; }}
+  .feedback-box.wrong {{ background: #FAEAE6; border: 1px solid #C0533A; color: #7A2A14; }}
   .next-btn {{
     margin-top: 24px; padding: 12px 28px;
-    background: linear-gradient(135deg, #6c6ff5, #a78bfa);
+    background: #A47864;
     color: #fff; border: none; border-radius: 10px;
     font-size: 0.95rem; font-weight: 600; cursor: pointer;
-    display: none; transition: opacity 0.18s;
+    display: none; transition: background 0.18s;
   }}
-  .next-btn:hover {{ opacity: 0.88; }}
+  .next-btn:hover {{ background: #7A5548; }}
   .next-btn.show {{ display: inline-flex; align-items: center; gap: 8px; }}
   .summary {{
     text-align: center; padding: 40px 0;
   }}
-  .summary h2 {{ font-size: 1.8rem; margin-bottom: 8px; }}
+  .summary h2 {{ font-size: 1.8rem; margin-bottom: 8px; color: #2C1A14; }}
   .score-ring {{
     width: 120px; height: 120px; border-radius: 50%;
-    border: 6px solid #6c6ff5;
+    border: 6px solid #A47864;
     display: flex; align-items: center; justify-content: center;
     margin: 20px auto;
-    font-size: 2rem; font-weight: 800; color: #fff;
+    font-size: 2rem; font-weight: 800; color: #2C1A14;
   }}
-  .score-label {{ color: #9ba3c4; font-size: 0.9rem; margin-top: 4px; }}
+  .score-label {{ color: #7A6258; font-size: 0.9rem; margin-top: 4px; }}
   .restart-btn {{
     margin-top: 24px; padding: 12px 32px;
-    background: #1e2030; border: 1.5px solid #2d3055;
-    color: #e8eaf0; border-radius: 10px;
+    background: #F0EAE4; border: 1.5px solid #E4D9D0;
+    color: #2C1A14; border-radius: 10px;
     font-size: 0.95rem; font-weight: 600; cursor: pointer;
   }}
-  .restart-btn:hover {{ border-color: #6c6ff5; }}
+  .restart-btn:hover {{ border-color: #A47864; }}
   .meta {{
-    font-size: 10px; color: #3d4260; text-align: center;
+    font-size: 10px; color: #B8A89E; text-align: center;
     margin-top: 40px; font-family: 'SF Mono', 'Fira Code', monospace;
   }}
 </style>
