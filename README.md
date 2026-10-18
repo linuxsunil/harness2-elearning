@@ -102,10 +102,10 @@ harness2-elearning/
 
 | Screen | What happens |
 |---|---|
-| **1 · Configure** | Pick domain, enter learning objective + audience |
-| **2 · Generate** | Live side-by-side streaming — generic left, domain-adapted right. Real harness trace with timestamps and token counts updates as Claude writes. |
-| **3 · Results** | Evaluator scores on 3 ID dimensions. Play both scenarios in tabs. Export buttons. |
-| **4 · Memory** | Save the winning domain prompt to `memory.json` — next run uses it automatically. |
+| **1 — Configure** | Choose a compliance domain (Pharma / FinServ / Cyber), enter your learning objective and target audience. These feed both agents identically — the only variable is the harness. |
+| **2 — Generate** | Both agents stream in real time. A live trace log shows every API call with timestamps, token counts, and agent events as Claude writes — you see the harness working, not just the output. |
+| **3 — Results** | The evaluator scores both scenarios across three instructional design dimensions: regulatory accuracy, consequence realism, and decision pressure. Play through either scenario in an interactive tab, then export. |
+| **4 — Memory** | Save the winning domain prompt to `memory.json`. The next run for that domain reads this file first — the agent starts from an already-improved baseline instead of the generic prompt. Gets smarter each run. |
 
 ---
 
