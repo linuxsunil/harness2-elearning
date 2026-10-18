@@ -136,12 +136,25 @@ html, body, [class*="css"] { font-family: 'Inter', sans-serif; }
 }
 
 /* Streamlit native widget overrides */
-.stButton > button {
+/* Primary action buttons (Generate etc) */
+.stButton > button[kind="primary"],
+.stButton > button:not([kind="secondary"]) {
   background: #A47864 !important; color: #fff !important;
   border: none !important; border-radius: 10px !important;
   font-weight: 600 !important;
 }
-.stButton > button:hover { background: #7A5548 !important; }
+.stButton > button[kind="primary"]:hover,
+.stButton > button:not([kind="secondary"]):hover { background: #7A5548 !important; }
+
+/* Download buttons — white bg, mocha border */
+.stDownloadButton > button {
+  background: #FFFFFF !important; color: #2C1A14 !important;
+  border: 1.5px solid #E4D9D0 !important; border-radius: 10px !important;
+  font-weight: 600 !important;
+}
+.stDownloadButton > button:hover {
+  border-color: #A47864 !important; background: #F0EAE4 !important;
+}
 .stSelectbox > div > div { border-color: #E4D9D0 !important; background: #F0EAE4 !important; color: #2C1A14 !important; }
 .stTextInput > div > div > input { border-color: #E4D9D0 !important; background: #F0EAE4 !important; color: #2C1A14 !important; }
 .stTextArea > div > div > textarea { border-color: #E4D9D0 !important; background: #F0EAE4 !important; color: #2C1A14 !important; }
@@ -593,114 +606,11 @@ def screen_results():
 # Scenario Player Component
 # ─────────────────────────────────────────────────────────────────────────────
 def render_player(key_prefix: str, scenario: dict):
-    """Stateful scenario player embedded in a Streamlit tab."""
-    scene_key = f"{key_prefix}_scene"
-    ans_key = f"{key_prefix}_answered"
-    score_key = f"{key_prefix}_score"
-    done_key = f"{key_prefix}_done"
-
-    if scene_key not in st.session_state:
-        st.session_state[scene_key] = 0
-        st.session_state[ans_key] = False
-        st.session_state[score_key] = 0
-        st.session_state[done_key] = False
-
-    scenes = scenario.get("scenes", [])
-    title = scenario.get("title", "Scenario")
-
-    st.markdown(f"**{title}**")
-    st.caption(scenario.get("context", ""))
-
-    tags = scenario.get("tags", [])
-    if tags:
-        st.markdown(" ".join(f"`{t}`" for t in tags))
-
-    st.markdown("---")
-
-    if st.session_state[done_key]:
-        total = len(scenes)
-        sc = st.session_state[score_key]
-        pct = round((sc / total) * 100) if total else 0
-        st.markdown(f"### ✅ Scenario Complete")
-        st.metric("Score", f"{sc} / {total} correct", f"{pct}%")
-        if st.button("↩ Restart", key=f"{key_prefix}_restart"):
-            st.session_state[scene_key] = 0
-            st.session_state[ans_key] = False
-            st.session_state[score_key] = 0
-            st.session_state[done_key] = False
-            st.rerun()
-        return
-
-    ci = st.session_state[scene_key]
-    if ci >= len(scenes):
-        st.session_state[done_key] = True
-        st.rerun()
-        return
-
-    scene = scenes[ci]
-    total = len(scenes)
-
-    # Progress
-    st.progress((ci) / total)
-    st.caption(f"Scene {ci + 1} of {total}")
-
-    st.markdown(f"**{scene.get('situation', '')}**")
-    st.markdown("")
-
-    choices = scene.get("choices", [])
-    answered = st.session_state[ans_key]
-    chosen_key = st.session_state.get(f"{key_prefix}_chosen")
-
-    for c in choices:
-        k = c["key"]
-        text = c["text"]
-        correct = c["correct"]
-        feedback = c.get("feedback", "")
-        btn_label = f"**{k}.** {text}"
-
-        if not answered:
-            if st.button(btn_label, key=f"{key_prefix}_c_{ci}_{k}", use_container_width=True):
-                st.session_state[ans_key] = True
-                st.session_state[f"{key_prefix}_chosen"] = k
-                st.session_state[f"{key_prefix}_chosen_correct"] = correct
-                st.session_state[f"{key_prefix}_chosen_feedback"] = feedback
-                if correct:
-                    st.session_state[score_key] += 1
-                st.rerun()
-        else:
-            # Show result styling
-            is_chosen = (k == chosen_key)
-            is_correct = correct
-
-            if is_correct:
-                prefix = "✅"
-            elif is_chosen:
-                prefix = "❌"
-            else:
-                prefix = "　"
-
-            st.markdown(f"{prefix} {btn_label}")
-
-    if answered:
-        chosen_correct = st.session_state.get(f"{key_prefix}_chosen_correct", False)
-        chosen_feedback = st.session_state.get(f"{key_prefix}_chosen_feedback", "")
-
-        if chosen_correct:
-            st.success(f"✓ Correct! {chosen_feedback}")
-        else:
-            st.error(f"✗ Not quite. {chosen_feedback}")
-
-        st.markdown("")
-        next_label = "Next Scene →" if ci < total - 1 else "See Results →"
-        if st.button(next_label, key=f"{key_prefix}_next_{ci}", type="primary"):
-            st.session_state[scene_key] = ci + 1
-            st.session_state[ans_key] = False
-            st.session_state.pop(f"{key_prefix}_chosen", None)
-            st.session_state.pop(f"{key_prefix}_chosen_correct", None)
-            st.session_state.pop(f"{key_prefix}_chosen_feedback", None)
-            if ci + 1 >= total:
-                st.session_state[done_key] = True
-            st.rerun()
+    """Render scenario player as self-contained HTML component — no Streamlit button styling leakage."""
+    import streamlit.components.v1 as components
+    from exporters.rise_exporter import export as rise_export
+    html = rise_export(scenario, domain=scenario.get("domain", ""), agent_label=key_prefix.capitalize())
+    components.html(html, height=700, scrolling=True)
 
 
 # ─────────────────────────────────────────────────────────────────────────────
